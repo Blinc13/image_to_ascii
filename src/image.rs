@@ -1,3 +1,8 @@
+use std::io::{
+    Error,
+    Result,
+    ErrorKind::InvalidData
+};
 use image::{
     DynamicImage,
     GenericImageView,
@@ -11,12 +16,22 @@ pub struct Image {
 }
 
 impl Image {
-    pub fn load(path: &str) -> Self {
-        let reader = Reader::open(path).unwrap();
+    pub fn load(path: &str) -> Result<Self> {
+        let reader = Reader::open(path)?;
 
-        Self {
-            data: reader.decode().unwrap()
-        }
+        Ok (
+            Self {
+                data: match reader.decode() {
+                    Ok(i) => i,
+                    Err(_) => {
+                        return Err(Error::new(
+                            InvalidData,
+                            "wrong file format"
+                        ))
+                    }
+                }
+            }
+        )
     }
 
     pub fn get_pixel(&self, x: u32, y: u32) -> Pixel {

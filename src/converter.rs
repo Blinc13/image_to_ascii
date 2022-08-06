@@ -2,36 +2,30 @@ use crate::Image;
 
 const CHARS: &str = " -0=%$@#";
 
-pub struct Converter {
-    ascii: String
-}
-
-impl Converter {
-    pub fn convert(image: Image, pixel_size: u32) -> Self {
-        let size = image.get_size();
-
-        let char_width = pixel_size;
-        let char_height = pixel_size*2;
+pub fn convert(image: Image, step: u32) -> String {
+    let mut output = String::new();
 
 
-        for y in 0..size.height / char_height {
-            for x in 0..size.width / char_width {
-                let pixel = image.get_pixel(
-                    (x * char_width).clamp(0, size.width-1),
-                    (y * char_height).clamp(0, size.height-1)
-                );
+    let size = image.get_size();
 
-                let c = pixel.average() / 32;
+    let width_step = step;
+    let height_step = step*2;
 
-                print!("{}", CHARS.chars().skip(c as usize).next().unwrap());
-            }
 
-            print!("\n");
+    for y in 0..size.height / height_step {
+        for x in 0..size.width / width_step {
+            let pixel = image.get_pixel(
+                (x * width_step).clamp(0, size.width-1),
+                (y * height_step).clamp(0, size.height-1)
+            );
+
+            let c = (pixel.average() / 32) as usize;
+
+            output.push_str(&CHARS[c..c+1]);
         }
 
-
-        Self {
-            ascii: "".to_string()
-        }
+        output.push('\n');
     }
+
+    output
 }
