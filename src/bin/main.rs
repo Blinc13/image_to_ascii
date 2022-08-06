@@ -1,10 +1,8 @@
-use image::io::Reader;
-
+use image_to_ascii::Image;
 
 fn main() {
-    let x = Reader::open("/home/blinc/Загрузки/rei_p.jpg").unwrap();
+    let image = Image::load("/");
 
-    println!("{:?}", x.format());
-    let x = x.decode().unwrap();
-    println!("{}", x.height());
+    let size = image.get_size();
+    println!("{}:{}", size.width, size.height);
 }
