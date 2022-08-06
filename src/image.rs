@@ -3,7 +3,7 @@ use image::{
     GenericImageView,
     io::Reader,
     Pixel as px,
-    Rgb, Rgba
+    Rgb
 };
 
 pub struct Image {
