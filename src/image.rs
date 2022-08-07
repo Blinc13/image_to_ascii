@@ -26,7 +26,7 @@ impl Image {
                     Err(_) => {
                         return Err(Error::new(
                             InvalidData,
-                            "wrong file format"
+                            "Wrong file format"
                         ))
                     }
                 }

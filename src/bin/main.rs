@@ -38,6 +38,6 @@ fn main() {
 }
 
 fn print_and_exit(message: &str) -> ! {
-    println!("{}", message);
+    eprintln!("{}", message);
     exit(1)
 }
