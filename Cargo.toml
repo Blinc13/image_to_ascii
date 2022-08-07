@@ -1,12 +1,13 @@
 [package]
 name = "image_to_ascii"
 readme = "README.md"
-description = "Image to ascii conversion"
+description = "Image to ascii conversion (opencl version)"
 authors = ["Blinc <https://github.com/Blinc13>"]
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+ocl = "0.19.3"
 image = "0.24.3"
 clap = {version = "3.2.16", features = ["derive"]}
 
