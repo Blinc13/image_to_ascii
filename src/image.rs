@@ -67,6 +67,7 @@ impl Pixel {
         self.color.0[2]
     }
 
+    /// Returns the average color value
     pub fn average(&self) -> u8 {
         let sum = self.red() as u16
             + self.green() as u16
