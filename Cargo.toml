@@ -1,5 +1,6 @@
 [package]
 name = "image_to_ascii"
+readme = "README.md"
 description = "Image to ascii conversion"
 authors = ["Blinc <https://github.com/Blinc13>"]
 version = "0.1.0"
