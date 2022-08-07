@@ -16,6 +16,21 @@ pub struct Image {
 }
 
 impl Image {
+    pub fn from_raw(data: &[u8], width: u32, height: u32) -> Result<Self> {
+        let data = match image::load_from_memory(data) {
+            Ok(i) => i,
+            Err(_) => return Err(Error::new(InvalidData,
+                                            "Failed to handle image"
+            ))
+        };
+
+        Ok(
+            Self {
+                data
+            }
+        )
+    }
+
     pub fn load(path: &str) -> Result<Self> {
         let reader = Reader::open(path)?;
 
@@ -32,6 +47,15 @@ impl Image {
                 }
             }
         )
+    }
+
+    pub fn get_raw(&self) -> &[u8] {
+        let r = self.data.as_flat_samples_u8()
+                .unwrap().as_slice() as *const [u8];
+
+        unsafe {
+            &*r
+        }
     }
 
     pub fn get_pixel(&self, x: u32, y: u32) -> Pixel {
