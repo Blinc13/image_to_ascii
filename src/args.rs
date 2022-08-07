@@ -9,5 +9,9 @@ pub struct Args {
 
     /// Pixel step(the larger the lower the resolution)
     #[clap(short, long, value_parser, default_value="10")]
-    pub step: u32
+    pub step: u32,
+
+    /// Invert colors(if set, colors inverted)
+    #[clap(short, long, value_parser, default_value="false")]
+    pub inverted: bool
 }

@@ -5,12 +5,19 @@ use std::{
 use image_to_ascii::{
     Args,
     Image,
-    converter::convert
+    converter::{
+        default_convert,
+        convert_inverted
+    }
 };
 use clap::Parser;
 
 fn main() {
     let args = Args::parse();
+
+    if args.step == 0 {
+        print_and_exit("Incorrect step")
+    }
 
     let image = match Image::load(&args.path) {
         Ok(i) => i,
@@ -24,7 +31,10 @@ fn main() {
         }
     };
 
-    println!("{}", convert(image, args.step));
+    println!("{}", match args.inverted {
+        true => convert_inverted(image, args.step),
+        false => default_convert(image, args.step)
+    });
 }
 
 fn print_and_exit(message: &str) -> ! {
