@@ -1,11 +1,5 @@
 use crate::Image;
-use ocl::{
-    Device,
-    Context,
-    Program,
-    Platform,
-    Image as ClImage,
-};
+use ocl::{Queue, Device, Context, Program, Platform, Image as ClImage, Kernel};
 
 const CHARS: &str = " -0=%$@#";
 
@@ -34,6 +28,17 @@ impl Converter {
 
         println!("{:?}", context);
         println!("{:?}", program.to_string());
+
+        let queue = Queue::new(&context, device, None).unwrap();
+
+        let kernel = Kernel::builder()
+            .queue(queue)
+            .program(&program)
+            .name("hello")
+            .global_work_size(5)
+            .build().unwrap();
+
+        unsafe { kernel.enq().unwrap() };
 
         Self {
             device,
