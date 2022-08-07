@@ -16,7 +16,7 @@ pub struct Image {
 }
 
 impl Image {
-    pub fn from_raw(data: &[u8], width: u32, height: u32) -> Result<Self> {
+    pub fn from_raw(data: &[u8]) -> Result<Self> {
         let data = match image::load_from_memory(data) {
             Ok(i) => i,
             Err(_) => return Err(Error::new(InvalidData,
